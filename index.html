@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%98%B8%3C/text%3E%3C/svg%3E" />
+    <title>Về chốn Đạo tràng</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body data-scene="ext">
+    <canvas id="webgl"></canvas>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="flash"></div>
+
+    <div class="loader">
+      <div class="loader__mark">☸</div>
+      <p class="loader__text">Đang dựng đạo tràng…</p>
+      <div class="loader__bar"><span></span></div>
+    </div>
+
+    <header class="topbar">
+      <span class="brand">Đạo tràng · hành trình 3D</span>
+      <nav class="nav">
+        <button data-goto="0">Phố</button>
+        <button data-goto="0.29">Mặt tiền</button>
+        <button data-goto="0.56">Chánh điện</button>
+        <button data-goto="0.78">Thangka</button>
+        <button data-goto="1">Bàn thờ</button>
+      </nav>
+    </header>
+
+    <div class="chapters"></div>
+
+    <div class="scroll-hint"><span>Cuộn xuống</span><i></i></div>
+    <p class="controls-hint">Kéo chuột: nhìn quanh · Shift hoặc chuột phải + kéo: di chuyển · Lăn chuột: zoom · Nhấp đúp: đặt lại</p>
+    <button class="play" type="button" aria-label="Tự động chạy"><span class="play__icon"></span><span class="play__label">Tự động</span></button>
+    <div class="progress"><span></span></div>
+
+    <!-- tall scroll track that drives the camera -->
+    <main id="scroll"></main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
