@@ -136,11 +136,12 @@ const vc = { yaw: 0, pitch: 0, panX: 0, panY: 0, zoom: 1 }; // eased current val
 const clamp = THREE.MathUtils.clamp;
 const pointers = new Map();
 let dragMode = null;
+let touchPan = false;
 canvas.addEventListener('contextmenu', e => e.preventDefault());
 canvas.addEventListener('pointerdown', e => {
   canvas.setPointerCapture(e.pointerId);
   pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-  dragMode = e.button === 2 || e.shiftKey ? 'pan' : 'look';
+  dragMode = e.button === 2 || e.shiftKey || touchPan ? 'pan' : 'look';
   document.body.classList.add('is-dragging');
 });
 canvas.addEventListener('pointermove', e => {
@@ -168,7 +169,17 @@ const endPointer = e => { pointers.delete(e.pointerId); if (!pointers.size) docu
 canvas.addEventListener('pointerup', endPointer);
 canvas.addEventListener('pointercancel', endPointer);
 window.addEventListener('wheel', e => { e.preventDefault(); vt.zoom = clamp(vt.zoom * Math.exp(-e.deltaY * 0.0012), 0.35, 1.5); }, { passive: false });
-canvas.addEventListener('dblclick', () => Object.assign(vt, { yaw: 0, pitch: 0, panX: 0, panY: 0, zoom: 1 }));
+const resetView = () => Object.assign(vt, { yaw: 0, pitch: 0, panX: 0, panY: 0, zoom: 1 });
+canvas.addEventListener('dblclick', resetView);
+// on-screen controls for touch screens
+const modeBtn = document.querySelector('[data-mode]');
+modeBtn.addEventListener('click', () => { touchPan = !touchPan; modeBtn.textContent = touchPan ? 'Dời' : 'Nhìn'; });
+document.querySelector('[data-reset]').addEventListener('click', resetView);
+document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => {
+  pauseAuto();
+  const to = clamp(window.scrollY / maxScroll() + parseFloat(b.dataset.step), 0, 1) * maxScroll();
+  window.scrollTo({ top: to, behavior: 'smooth' });
+}));
 
 function setScene(which) {
   if (currentScene === which) return;
